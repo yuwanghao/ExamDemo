@@ -214,6 +214,10 @@ public class Schedule {
             toBeRunTaskInfo.remove(taskInfo);
         }
 
+
+
+
+
         return ReturnCodeKeys.E013;
     }
 
@@ -282,17 +286,13 @@ public class Schedule {
             return ReturnCodeKeys.E016;
         }
 
-        needQueryTasks : for(TaskInfo taskInfo : tasks)
-        {
+
             //挂起任务查询
             for(TaskInfo toBeRuntaskInfo : toBeRunTaskInfo)
             {
-                if(toBeRuntaskInfo.getTaskId() == taskInfo.getTaskId())
-                {
                     //如果该任务处于挂起队列中, 所属的服务编号为-1;
-                    taskInfo.setNodeId(-1);
-                    continue needQueryTasks;
-                }
+                    toBeRuntaskInfo.setNodeId(-1);
+                    tasks.add(toBeRuntaskInfo);
             }
 
             //删服务器运行任务查询
@@ -300,30 +300,15 @@ public class Schedule {
             {
                 for(TaskInfo nodeAllTaskInfo : nodeInfo.getAllTaks())
                 {
-                    if(nodeAllTaskInfo.getTaskId() == taskInfo.getTaskId())
-                    {
-                        taskInfo.setNodeId(nodeAllTaskInfo.getNodeId());
-                        continue needQueryTasks;
-                    }
+                    tasks.add(nodeAllTaskInfo);
                 }
             }
-        }
 
-        //清空未被查询到的task
-        for(int i = 0; i< tasks.size(); i++)
-        {
-            TaskInfo task = null;
-            if(null != (task = tasks.get(i)) && task.getNodeId() == 0 )
-            {
-                tasks.remove(i);
-                i --;
-            }
-        }
 
         //task id升序排列
         Collections.sort(tasks, new Comparator<TaskInfo>() {
             public int compare(TaskInfo o1, TaskInfo o2) {
-                return o1.getTaskId() - o2.getTaskId();
+                return  o2.getTaskId() - o1.getTaskId();
             }
         });
 
