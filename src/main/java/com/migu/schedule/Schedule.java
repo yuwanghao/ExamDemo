@@ -4,7 +4,6 @@ package com.migu.schedule;
 import com.migu.schedule.constants.ReturnCodeKeys;
 import com.migu.schedule.info.NodeInfo;
 import com.migu.schedule.info.TaskInfo;
-import com.sun.xml.internal.bind.v2.runtime.reflect.Lister;
 
 import java.util.*;
 import java.util.concurrent.ConcurrentHashMap;
